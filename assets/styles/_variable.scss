@@ -1,7 +1,16 @@
 $primary: #E2B44A;
 $secondary: #E3474B;
+$tertiary: #E7C169;
+$font-colour: #866C32;
+$body-bg: #FDF7FA;
+$footer-color: #090909;
 
-// $theme-colors: (
-//   "primary": $primary,
-//   "secondary": $secondary,
-// );
+
+$theme-colors: (
+    "secondary": $secondary,
+    "primary": $primary,
+    "tertiary": $tertiary,
+    "font-colour": $font-colour,
+    "body-bg": $body-bg,
+    "footer-color": $footer-color,
+);
