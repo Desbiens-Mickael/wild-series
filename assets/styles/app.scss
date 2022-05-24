@@ -1,12 +1,4 @@
-
-$primary: #E2B44A;
-$secondary: #E3474B;
-
-$theme-colors: (
-  "primary": $primary,
-  "secondary": $secondary,
-);
-
+@import "_variable";
 @import "~bootstrap/scss/bootstrap";
 
 body {
