@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light bg-light fixed-top pt-0">
+<nav class="navbar navbar-light bg-body-bg fixed-top pt-0">
   <div class="container-fluid bg-primary mb-2 baniere-nav">
     <h3 class="text-center w-100 text-font-colour">Bienvenue</h3>
   </div>
@@ -15,10 +15,13 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
+            <a class="nav-link active" aria-current="page" href="{{ path('home_index')}}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/program/">Program</a>
+            <a class="nav-link" href="{{ path('program_index')}}">Program</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('category_index')}}">Categorie</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
