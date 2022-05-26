@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{program.title}} {% endblock %}
+
+{% block body %}
+<div class="container">
+    {% for season in seasons %}
+        {% if season.id == seasonId %}
+            <h1 class="text-center mt-3">Saison {{season.number}} de {{program.title}} </h1> 
+            <hr>
+            <p> {{season.description }} </p> 
+                <ul>  
+                {% for episode in season.episodes %}
+                <li>Episode {{episode.number}} : {{episode.title}} </li>
+                {% endfor %} 
+                </ul>  
+        {% else %}
+            <p>Saison non trouvé</p>
+      {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
