@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Ajout d'une nouvelle categorie{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-outline-primary text-font-colour">Ajouter la category</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
