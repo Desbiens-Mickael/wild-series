@@ -5,3 +5,8 @@
 body{
     padding-top: 11vh;
 }
+
+.img-min{
+    height: 20vh;
+    width: clamp(10vw, 50vh, 15vh);
+}

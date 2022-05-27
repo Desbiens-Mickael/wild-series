@@ -4,13 +4,13 @@
 
 {% block body %}
     <div class="container">
-        <div class="media">
-            <img class="align-self-start mr-3" src="{{ asset('build/images/' ~ program.poster)}} " alt="{{ program.title }} poster">
-            <div class="media-body">
-                <h1 class="mt-0">{{ program.title }}</h1>
-                <p>{{ program.synopsis }}</p>
+        <div class="media text-center">
+            <img class="mr-3 h-25 w-25" src="{{ asset('build/images/' ~ program.poster)}} " alt="{{ program.title }}">
+            <div class="media-body d-flex flex-column justify-content-beetwen align-items-center">
+                <h1 class="mt-2">{{ program.title }}</h1>
+                <p class="w-75">{{ program.synopsis }}</p>
                 <p>Saison : <ul>
-                    {% for season in seasons %}
+                    {% for season in program.seasons %}
                         <li><a href="/program/{{ program.id }}/season/{{ season.id }}">saison {{ season.number }}</a></li>
                     {% endfor %}
                 </ul> </p>

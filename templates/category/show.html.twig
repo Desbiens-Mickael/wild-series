@@ -4,9 +4,9 @@
 
 {% block body %}
     <div class="container">
-        <h1>Toutes les séries de la catégorie {{ category.name }} : </h1>
+        <h1 class="mb-3">Toutes les séries de la catégorie {{ category.name }} : </h1>
         {% for program in programs %}
-            <div>
+            <div class="mt-5">
                 <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
                 <p>{{ program.synopsis }}</p>
                 {# Lien vers la fiche de la série : #}

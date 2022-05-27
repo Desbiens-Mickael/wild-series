@@ -4,17 +4,14 @@
 
 {% block body %}
 <div class="container">
-    {% for season in seasons %}
-        {% if season.id == seasonId %}
-            <h1 class="text-center mt-3">Saison {{season.number}} de {{program.title}} </h1> 
-            <hr>
-            <p> {{season.description }} </p> 
-                <ul>  
-                {% for episode in season.episodes %}
-                <li>Episode {{episode.number}} : {{episode.title}} </li>
-                {% endfor %} 
-                </ul>  
-      {% endif %}
-    {% endfor %}
+    <h1 class="text-center mt-3">Saison {{season.number}} de {{program.title}} </h1> 
+    <hr>
+    <p> {{season.description }} </p> 
+    <ul>  
+    {% for episode in season.episodes %}
+          <li><a href="{{ path("program_episode_show", {"program_id": program.id, "season_id": season.id,
+                        "episode_id": episode.id})}}">Episode {{episode.number}} : {{episode.title}}</a>  </li>
+    {% endfor %} 
+    </ul> 
 </div>
 {% endblock %}

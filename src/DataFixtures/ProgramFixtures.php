@@ -77,7 +77,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
     ];
     public function load(ObjectManager $manager)
     {
-        $faker = Factory::create();
+        $faker = Factory::create('fr_FR');
 
         foreach (self::PROGRAMS as $key => $element) {
             $program = new Program();
