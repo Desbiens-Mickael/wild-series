@@ -3,18 +3,28 @@
 {% block title %}{{ program.title }}{% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div>
         <div class="media text-center">
-            <img class="mr-3 h-25 w-25" src="{{ asset('build/images/' ~ program.poster)}} " alt="{{ program.title }}">
+            <img class="mr-3 h-25 w-25" src="../../{{ images_dir }}/{{ program.poster }}" alt="{{ program.title }}">
             <div class="media-body d-flex flex-column justify-content-beetwen align-items-center">
                 <h1 class="mt-2">{{ program.title }}</h1>
+                <p><strong>Catégorie :</strong> {{ program.category.name }}</p>
                 <p class="w-75">{{ program.synopsis }}</p>
-                <p>Saison : <ul>
+                <strong>Saison : </strong>
+                <ul class="list-unstyled">
                     {% for season in program.seasons %}
-                        <li><a href="/program/{{ program.id }}/season/{{ season.id }}">saison {{ season.number }}</a></li>
+                        <li><a href="{{ path('program_season_show', { 'program_slug': program.slug, 'season_id': season.id }) }}" class="text-decoration-none">saison {{ season.number }}</a></li>
                     {% endfor %}
-                </ul> </p>
-                <p>Catégorie : {{ program.category.name }}</p>
+                </ul>
+                
+                <strong>Acteurs :</strong>
+                <ul class="list-unstyled">
+                    {% for actor in program.actors %}
+                        <li><a href="{{ path('actor_show', {'id': actor.id}) }}" class="text-decoration-none">{{ actor.name }}</a></li>
+                    {% else %}
+                        <li>Aucun acteur pour cette série</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
 

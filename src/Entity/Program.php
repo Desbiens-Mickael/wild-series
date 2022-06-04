@@ -35,6 +35,9 @@ class Program
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private string $poster;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private string $posterLg;
+
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'programs')]
     private $category;
 
@@ -47,9 +50,16 @@ class Program
     #[ORM\OneToMany(mappedBy: 'program', targetEntity: Season::class, orphanRemoval: true)]
     private $seasons;
 
+    #[ORM\ManyToMany(targetEntity: Actor::class, mappedBy: 'programs')]
+    private $actors;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $slug;
+
     public function __construct()
     {
         $this->seasons = new ArrayCollection();
+        $this->actors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -155,6 +165,57 @@ class Program
                 $season->setProgram(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Actor>
+     */
+    public function getActors(): Collection
+    {
+        return $this->actors;
+    }
+
+    public function addActor(Actor $actor): self
+    {
+        if (!$this->actors->contains($actor)) {
+            $this->actors[] = $actor;
+            $actor->addProgram($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActor(Actor $actor): self
+    {
+        if ($this->actors->removeElement($actor)) {
+            $actor->removeProgram($this);
+        }
+
+        return $this;
+    }
+
+    public function getPosterLg(): ?string
+    {
+        return $this->posterLg;
+    }
+
+    public function setPosterLg(?string $posterLg): self
+    {
+        $this->posterLg = $posterLg;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

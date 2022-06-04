@@ -1,7 +1,6 @@
 @import "_variable";
 @import "~bootstrap/scss/bootstrap";
-@import "global";
-
-// body {
-//     background-color: #E8E8E8;
-// }
+@import "_global";
+@import "_navbar";
+@import "_home";
+@import "_program";

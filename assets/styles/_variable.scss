@@ -1,11 +1,17 @@
 $primary: #E2B44A;
 $secondary: #E3474B;
 $body-bg: #FDF7FA;
+$navbar-light-color: $secondary;
+$navbar-light-toggler-border-color: $body-bg;
+$navbar-light-brand-color: $secondary;
 
 $theme-colors: (
-    "secondary": $secondary,
     "primary": $primary,
+    "secondary": $secondary,
     "body-bg": $body-bg,
+    "navbar-light-color" : $navbar-light-color,
+    "navbar-light-toggler-border-color": $navbar-light-toggler-border-color,
+    "navbar-light-brand-color": $navbar-light-brand-color,
 );
 
 // Create your own map
@@ -13,7 +19,11 @@ $custom-colors: (
     "tertiary": #E7C169,
     "font-colour": #866C32,
     "footer-color": #090909,
+    "box" : #E8E8E8,
+    "carousel-gray": #1b1b1b,
 );
 
 // Merge the maps
 $theme-colors: map-merge($theme-colors, $custom-colors);
+
+$carousel-transition-duration: 1s;

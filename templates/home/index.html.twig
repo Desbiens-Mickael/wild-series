@@ -3,5 +3,101 @@
 {% block title %}Wild Series{% endblock %}
 
 {% block body %}
-<h1>Bienvenue !</h1>
+    <article class="container-fluid articale-box d-flex flex-row justify-content-center">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators d-flex flex-row justify-content-start m-0 carousel-btn pt-2 px-1 rounded">
+                {% set carousel = programs|slice(-5) %}
+
+                {% for program in carousel %}
+                    {% if program == carousel[0] %}
+                        <div class="d-flex flex-column small-screen-btn">
+                            <img src="{{ images_dir }}/{{ program.poster }}" alt="Image de {{ program.title }}" class="button-img d-none d-md-block">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="bg-secondary h-100 w-100 m-0 border-0 active" aria-current="true" aria-label="Slide 1"></button>
+                        </div>
+                    {% else %}
+                        <div class="d-flex flex-column ms-2 small-screen-btn">
+                            <img src="{{ images_dir }}/{{ program.poster }}" alt="Image de {{ program.title }}" class="button-img d-none d-md-block">
+                            <button class="bg-secondary h-100 w-100 m-0 border-0" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{loop.index - 1}}" aria-label="Slide {{loop.index }}"></button>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="carousel-inner">
+                {% for program in carousel %}
+                    {% if program == carousel[0] %}
+                        <div class="carousel-item active text-center bg-carousel-gray">
+                            <a href="{{ path('program_show', {'slug' : program.slug}) }}">
+                                <img src="{{ images_lg_dir }}/{{ program.posterLg }}" class="img-carousel" alt="...">
+                            </a>
+                        </div>   
+                    {% else %}
+                        <div class="carousel-item text-center bg-carousel-gray">
+                            <a href="{{ path('program_show', {'slug' : program.slug}) }}">
+                                <img src="{{ images_lg_dir }}/{{ program.posterLg }}" class="img-carousel" alt="...">
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bg-secondary rounded-circle" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon bg-secondary rounded-circle" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </article>
+
+    <section class=" bg-tertiary choice-box shadow px-3 pt-3 mt-1 rounded">
+        <div class="bg-body-bg shadow category-box m-0 h-100 w-100 rounded">
+            <div class="h-25 w-100 rounded shadow row m-0">
+                <!-- Example single danger button -->
+                <div class="btn-group col-4 col-md-3 m-auto p-0 h-50">
+                    <button type="button" class="btn btn-tertiary dropdown-toggle shadow" data-bs-toggle="dropdown" aria-expanded="false">
+                    Categorie
+                    </button>
+                    <ul class="dropdown-menu shadow"> 
+                        {% for category in categories %}
+                            <li><a class="dropdown-item" href="{{ path('category_show', {'categoryName': category.name}) }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="btn-group col-4 col-md-3 m-auto p-0  h-50">
+                    <button type="button" class="btn btn-tertiary dropdown-toggle shadow" data-bs-toggle="dropdown" aria-expanded="false">
+                    Acteur
+                    </button>
+                    <ul class="dropdown-menu shadow"> 
+                        {% for actor in actors %}
+                            <li><a class="dropdown-item" href="{{ path('actor_show', {'id': actor.id}) }}">{{ actor.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="btn-group col-4 col-md-3 m-auto p-0 h-50">
+                    <button type="button" class="btn btn-tertiary dropdown-toggle shadow" data-bs-toggle="dropdown" aria-expanded="false">
+                    Favorie
+                    </button>
+                    <ul class="dropdown-menu shadow"> 
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container-fluid  mb-5 bg-tertiary">
+        <div class="row d-flex flex-row justify-content-evenly">
+            <div class="col-2 text-center box-brand py-auto"><img src="{{ asset('build/images/mycanal.png') }}" alt="" class="img-fluid pb-2 "></div>
+            <div class="col-2 text-center box-brand py-auto"><img src="{{ asset('build/images/netflix.png') }}" alt="" class="img-fluid pb-2"></div>
+            <div class="col-2 text-center box-brand py-auto"><img src="{{ asset('build/images/OCS.png') }}" alt="" class="img-fluid pb-2"></div>
+            <div class="col-2 text-center box-brand py-auto"><img src="{{ asset('build/images/prime_video.png') }}" alt="" class="img-fluid pb-2"></div>
+            <div class="col-2 text-center box-brand py-auto"><img src="{{ asset('build/images/Salto.png') }}" alt="" class="img-fluid pb-2"></div>
+            <div class="col-2 text-center box-brand py-auto"><img src="{{ asset('build/images/disney.png') }}" alt="" class="img-fluid pb-2"></div>
+            <div class="col-2 text-center box-brand py-auto"><img src="{{ asset('build/images/apple_tv.png') }}" alt="" class="img-fluid pb-2"></div>
+        </div>
+    </section>
 {% endblock %}

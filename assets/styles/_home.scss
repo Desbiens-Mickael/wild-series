@@ -1,0 +1,64 @@
+///////// carousel //////////
+.articale-box{
+    height: 41vh;
+}
+
+.img-carousel{
+    height: 30vh;
+    max-width: 100%;
+}
+
+.button-img{
+    height: 100px;
+    width: 90px;
+}
+
+.carousel-btn{
+    height: 120px;
+    width: 490px;
+    position: absolute;
+    top: 90%;
+    left: 5%;
+}
+
+.carousel{
+    height: 30vh;
+    width: 65vw;
+}
+
+@media screen and (max-width: 770px){
+    .carousel{
+        width: 100vw;
+    }
+}
+
+.carousel-btn{
+    background-color: #E8E8E8;
+}
+
+@media screen and (max-width: 770px){
+    .small-screen-btn{
+        height: 10px;
+        width: 50px;
+    }
+
+    .carousel-btn{
+        background-color: inherit;
+    }
+}
+
+////////// choice box /////////////
+.choice-box{
+    height: 50vh;
+}
+
+@media screen and (max-width: 770px){
+    
+   
+}
+
+.box-brand{
+    height: 70px;
+    width: 100px;
+    padding: auto;
+}

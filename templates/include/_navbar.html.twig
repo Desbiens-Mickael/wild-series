@@ -1,47 +1,65 @@
-<nav class="navbar navbar-light bg-body-bg fixed-top pt-0">
-  <div class="container-fluid bg-primary mb-2 baniere-nav">
-    <h3 class="text-center w-100 text-font-colour">Bienvenue</h3>
-  </div>
-  <div class="container-fluid">
-    <button class="navbar-toggler me-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="/">Wild series</a>
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+<header>
+  <nav class="navbar navbar-light bg-body-bg fixed-top pt-0 shadow">
+    <div class="container-fluid bg-primary mb-2 baniere-nav">
+      <h3 class="text-center w-100 text-font-colour">Bienvenue</h3>
+    </div>
+    <div class="container-fluid d-flex flex-row justify-content-beetwen align-items-stretch">
+      <div>
+        <button class="navbar-toggler ms-3 me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="/">
+          <img src="{{ asset('build/images/Wild.png') }}" alt="Logo wild series" class="nav-img ">
+        </a>
       </div>
-      <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ path('home_index')}}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ path('program_index')}}">Program</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ path('category_index')}}">Categorie</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+      <div class="me-5 d-md-flex flex-md-row justify-content-beetwen d-none ">
+      <div class="me-2 bg-box rounded nav-box text-center py-1 shadow"><a href="#" class="text-secondary text-decoration-none fw-bold fs-5">s'inscrire</a></div>
+      <div class="bg-box rounded nav-box text-center py-1 shadow"><a href="#" class="text-secondary text-decoration-none fw-bold fs-5">connexion</a></div>
+      </div>
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Wild series</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div class="me-5 d-flex flex-row justify-content-beetwen">
+            <div class="me-1 bg-box rounded nav-box text-center py-1 ms-5 shadow">
+              <a href="#" class="text-secondary text-decoration-none fw-bold fs-5">s'inscrire</a>
+          </div>
+          <div class="bg-box rounded nav-box text-center py-1 ms-5 shadow">
+              <a href="#" class="text-secondary text-decoration-none fw-bold fs-5">connexion</a>
+          </div>
+          </div>
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{ path('home_index')}}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('program_index')}}">Program</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('category_index')}}">Categorie</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>

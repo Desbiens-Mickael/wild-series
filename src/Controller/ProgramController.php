@@ -5,13 +5,17 @@ namespace App\Controller;
 use App\Entity\Season;
 use App\Entity\Episode;
 use App\Entity\Program;
+use App\Service\Slugify;
 use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 #[Route('/program', name: 'program_')]
 class ProgramController extends AbstractController
@@ -27,15 +31,69 @@ class ProgramController extends AbstractController
     }
 
     #[Route('/new', name: 'new')]
-    public function new(Request $request, ProgramRepository $ProgramRepository)
+    public function new(
+        Request $request, 
+        ProgramRepository $ProgramRepository,
+        SluggerInterface $slugger,
+        Slugify $slugify
+        ): Response
     {
         $program = new Program();
 
         $form = $this->createForm(ProgramType::class, $program);
 
+        // Vérifie si le formulaire a été soumis.
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+           
+            $posterLgFile = $form->get('posterLgFile')->getData();
+            $posterFile = $form->get('posterFile')->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($posterLgFile) {
+                $originalFilename = pathinfo($posterLgFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$posterLgFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $posterLgFile->move(
+                        $this->getParameter('images_lg_dir'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $program->setPosterLg($newFilename);
+            }
+            if ($posterFile) {
+                $originalFilename = pathinfo($posterFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$posterFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $posterFile->move(
+                        $this->getParameter('images_dir'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $program->setPoster($newFilename);
+            }
+            $slug = $slugify->generate($program->getTitle());
+            $program->setSlug($slug);
             $ProgramRepository->add($program, true);            
     
             // Redirect to categories list
@@ -48,7 +106,7 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{id<\d+>}/', methods: ['GET'], name: 'show')]
+    #[Route('/{slug<[^0-9]+>}/', methods: ['GET'], name: 'show')]
     public function show(Program $program): Response
     {
         return $this->render('program/show.html.twig', [
@@ -56,8 +114,8 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{program_id<\d+>}/season/{season_id<\d+>}', methods: ['GET'], name: 'season_show')]
-    #[Entity('program', options: ['id' => 'program_id'])]
+    #[Route('/{program_slug<[^0-9]+>}/season/{season_id<\d+>}', methods: ['GET'], name: 'season_show')]
+    #[ParamConverter('program', options: ['mapping' =>['program_slug' => 'slug']])]
     #[Entity('season', options: ['id' => 'season_id'])]
     public function showSeason(Program $program, Season $season): Response
     {
@@ -67,11 +125,11 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{program_id<\d+>}/season/{season_id<\d+>}/episode/{episode_id<\d+>}',
+    #[Route('/{program_slug<[^0-9]+>}/season/{season_id<\d+>}/episode/{episode_slug<[^0-9]+>}',
             methods: ['GET'], name: 'episode_show')]
-    #[Entity('program', options: ['id' => 'program_id'])]
+    #[ParamConverter('program', options: ['mapping' =>['program_slug' => 'slug']])]
     #[Entity('season', options: ['id' => 'season_id'])]
-    #[Entity('episode', options: ['id' => 'episode_id'])]
+    #[ParamConverter('episode', options: ['mapping' =>['episode_slug' => 'slug']])]
     public function showEpisode(Program $program, Season $season, Episode $episode): Response
     {
         return $this->render('program/episode_show.html.twig', [

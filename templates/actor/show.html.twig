@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Acteur{% endblock %}
+
+{% block body %}
+    <h1 class="mt-3">Acteurs : {{ actor.name }} </h1>
+        <ul class="list-unstyled">
+            {% for program in actor.programs %}
+                <li><a href="{{ path('program_show', {'slug': program.slug}) }}" class="text-decoration-none"> {{ program.title }} </a></li>
+            {% endfor %}
+        </ul>
+{% endblock %}

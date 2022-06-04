@@ -6,11 +6,16 @@
     <div class="container">
         <h1 class="mb-3">Toutes les séries de la catégorie {{ category.name }} : </h1>
         {% for program in programs %}
-            <div class="mt-5">
-                <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
-                <p>{{ program.synopsis }}</p>
-                {# Lien vers la fiche de la série : #}
-                <a href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
+            <div class="d-flex flex-column flex-md-row mt-4 mb-sm-5">
+                <div class="d-flex flex-row justify-content-center">
+                    <img class="img-min" src="../{{ images_dir }}/{{ program.poster }}" alt="{{ program.title }}">
+                </div>
+                <div class="d-flex flex-column align-items-center align-items-md-start ms-md-4">
+                    <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
+                    <p>{{ program.synopsis }}</p>
+                    {# Lien vers la fiche de la série : #}
+                    <a href="{{ path("program_show", { 'slug': program.slug }) }}">Voir la fiche</a>
+                </div>
             </div>
         {% else %}
             Aucune série trouvée.
