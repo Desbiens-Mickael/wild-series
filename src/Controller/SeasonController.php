@@ -9,11 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-#[Route('/season')]
+ 
+#[Route('/season', name: 'season_')]
 class SeasonController extends AbstractController
 {
-    #[Route('/', name: 'app_season_index', methods: ['GET'])]
+    #[Route('/', name: 'index', methods: ['GET'])]
     public function index(SeasonRepository $seasonRepository): Response
     {
         return $this->render('season/index.html.twig', [
@@ -21,7 +21,7 @@ class SeasonController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_season_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(Request $request, SeasonRepository $seasonRepository): Response
     {
         $season = new Season();
@@ -31,7 +31,7 @@ class SeasonController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $seasonRepository->add($season, true);
 
-            return $this->redirectToRoute('app_season_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('season_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('season/new.html.twig', [
@@ -40,7 +40,7 @@ class SeasonController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_season_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(Season $season): Response
     {
         return $this->render('season/show.html.twig', [
@@ -48,7 +48,7 @@ class SeasonController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_season_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Season $season, SeasonRepository $seasonRepository): Response
     {
         $form = $this->createForm(SeasonType::class, $season);
@@ -57,7 +57,7 @@ class SeasonController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $seasonRepository->add($season, true);
 
-            return $this->redirectToRoute('app_season_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('season_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('season/edit.html.twig', [
@@ -66,13 +66,13 @@ class SeasonController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_season_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, Season $season, SeasonRepository $seasonRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$season->getId(), $request->request->get('_token'))) {
             $seasonRepository->remove($season, true);
         }
 
-        return $this->redirectToRoute('app_season_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('season_index', [], Response::HTTP_SEE_OTHER);
     }
 }

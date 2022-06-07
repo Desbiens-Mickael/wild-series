@@ -9,8 +9,10 @@
     <p> {{season.description }} </p> 
     <ul class="list-unstyled">  
     {% for episode in season.episodes %}
-          <li><a href="{{ path("program_episode_show", {"program_slug": program.slug, "season_id": season.id,
-                        "episode_slug": episode.slug})}}" class="text-decoration-none">Episode {{episode.number}} : {{episode.title}}</a>  </li>
+        <li>
+            <a href="{{ path("program_episode_show", {"program_slug": program.slug, "season_id": season.id,
+                      "episode_slug": episode.slug})}}" class="text-decoration-none">Episode {{episode.number}} : {{episode.title}}</a>
+        </li>
     {% endfor %} 
     </ul> 
 </div>

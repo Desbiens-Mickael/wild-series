@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\EpisodeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,9 +19,13 @@ class Episode
     private $season;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Assert\Length(max: 100)]
+    #[Assert\NotBlank]
     private $title;
 
     #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank]
+    #[Assert\Positive]
     private $number;
 
     #[ORM\Column(type: 'text')]

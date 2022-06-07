@@ -1,0 +1,13 @@
+{% extends "baseEmail.html.twig" %}
+
+{% block title %}Nouvel episode{% endblock %}
+
+{% block body %}
+    <h1>Un nouvel épisode de la série {{ episode.season.program.title }} vien d'être ajouter</h1>
+    <p>{{episode.number}} : {{ episode.title }} </p>
+    <p>Synopsis : {{episode.synopsis }}
+    <a href="{{ path('program_episode_show', { 
+        'program_slug': episode.season.program.slug,
+        'season_id': episode.season.id,
+        'episode_slug': episode.slug})}}">visioner l'épisode</a>
+{% endblock %}

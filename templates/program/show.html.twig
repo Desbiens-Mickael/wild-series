@@ -16,7 +16,7 @@
                         <li><a href="{{ path('program_season_show', { 'program_slug': program.slug, 'season_id': season.id }) }}" class="text-decoration-none">saison {{ season.number }}</a></li>
                     {% endfor %}
                 </ul>
-                
+
                 <strong>Acteurs :</strong>
                 <ul class="list-unstyled">
                     {% for actor in program.actors %}

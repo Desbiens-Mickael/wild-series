@@ -14,10 +14,19 @@ class SeasonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('number', TextType::class)
-            ->add('year')
+            ->add('number', TextType::class, [
+                'label' => 'Numéro'
+            ])
+
+            ->add('year', null, [
+                'label' => 'Année'
+                ])
+
             ->add('description', TextareaType::class)
-            ->add('program', null, ['choice_label' => 'title'])
+            ->add('program', null, [
+                'choice_label' => 'title',
+                'label' => 'Série'
+                ])
         ;
     }
 

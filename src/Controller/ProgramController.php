@@ -8,7 +8,9 @@ use App\Entity\Program;
 use App\Service\Slugify;
 use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -35,7 +37,8 @@ class ProgramController extends AbstractController
         Request $request, 
         ProgramRepository $ProgramRepository,
         SluggerInterface $slugger,
-        Slugify $slugify
+        Slugify $slugify,
+        MailerInterface $mailer
         ): Response
     {
         $program = new Program();
@@ -94,8 +97,19 @@ class ProgramController extends AbstractController
             }
             $slug = $slugify->generate($program->getTitle());
             $program->setSlug($slug);
-            $ProgramRepository->add($program, true);            
-    
+
+            $ProgramRepository->add($program, true);     
+
+            $email = (new Email())
+                ->from('wild.serie@wildcodeschool.fr')
+                ->to($this->getParameter('mailer_from'))
+                ->subject('Une nouvelle série vient d\'être publiée !')
+                ->html($this->renderView('Program/newProgramEmail.html.twig', [
+                    'program' => $program
+                ]));
+
+            $mailer->send($email);
+
             // Redirect to categories list
             return $this->redirectToRoute('program_index');
         }

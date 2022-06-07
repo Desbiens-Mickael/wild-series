@@ -7,6 +7,7 @@ parameters:
     uploads_dir: 'uploads'
     images_lg_dir: '%uploads_dir%/images_lg'
     images_dir: '%uploads_dir%/images'
+    mailer_from: '%env(resolve:MAILER_FROM_ADDRESS)%'
 
 services:
     # default configuration for services in *this* file

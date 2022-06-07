@@ -3,13 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Episode;
-use App\Form\EpisodeType;
-use App\Repository\EpisodeRepository;
 use App\Service\Slugify;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\EpisodeType;
+use Symfony\Component\Mime\Email;
+use App\Repository\EpisodeRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/episode', name: 'episode_')]
 class EpisodeController extends AbstractController
@@ -26,7 +28,8 @@ class EpisodeController extends AbstractController
     public function new(
         Request $request, 
         EpisodeRepository $episodeRepository,
-        Slugify $slugify
+        Slugify $slugify,
+        MailerInterface $mailer
         ): Response
     {
         $episode = new Episode();
@@ -36,7 +39,18 @@ class EpisodeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugify->generate( $episode->getTitle());
             $episode->setSlug($slug);
+
             $episodeRepository->add($episode, true);
+
+            $email = (new Email())
+            ->from('wild.serie@wildcodeschool.fr')
+            ->to($this->getParameter('mailer_from'))
+            ->subject("Un nouvel épisode vient d\'être publiée !")
+            ->html($this->renderView('Episode/newEpisodeEmail.html.twig', [
+                'episode' => $episode
+            ]));
+
+        $mailer->send($email);
 
             return $this->redirectToRoute('episode_index', [], Response::HTTP_SEE_OTHER);
         }
