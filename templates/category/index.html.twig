@@ -7,7 +7,7 @@
         <h1 class="text-center mb-5">Les différentes catégories</h1>
         <div class="container-fluide mt-5">
             {% for category in categories %}
-                <div class="text-center fs-1"><a href="/category/{{ category.name }}">{{ category.name }}</a></div>
+                <div class="text-center fs-1"><a class="btn btn-primary btn-category" href="/category/{{ category.name }}">{{ category.name }}</a></div>
             {% endfor %}
         </div>
     </div>

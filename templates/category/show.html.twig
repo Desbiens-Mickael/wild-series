@@ -14,14 +14,14 @@
                     <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
                     <p>{{ program.synopsis }}</p>
                     {# Lien vers la fiche de la série : #}
-                    <a href="{{ path("program_show", { 'slug': program.slug }) }}">Voir la fiche</a>
+                    <a class="btn btn-primary" href="{{ path("program_show", { 'slug': program.slug }) }}">Voir la fiche</a>
                 </div>
             </div>
         {% else %}
             Aucune série trouvée.
         {% endfor %}
 
-        <a href="{{ path('home_index') }}">
+        <a class="btn btn-primary" href="{{ path('home_index') }}">
             Retour à l'accueil
         </a>
     </div>

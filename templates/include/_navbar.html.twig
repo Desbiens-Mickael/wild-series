@@ -13,9 +13,14 @@
         </a>
       </div>
       <div class="me-5 d-md-flex flex-md-row justify-content-beetwen d-none ">
-      <div class="me-2 bg-box rounded nav-box text-center py-1 shadow"><a href="#" class="text-secondary text-decoration-none fw-bold fs-5">s'inscrire</a></div>
-      <div class="bg-box rounded nav-box text-center py-1 shadow"><a href="#" class="text-secondary text-decoration-none fw-bold fs-5">connexion</a></div>
-      </div>
+      {% if app.user %}
+        {{ app.user.email }}
+          <div class="bg-box rounded nav-box text-center py-1 shadow"><a href="{{ path('app_logout') }}" class="text-secondary text-decoration-none fw-bold fs-5">déconnexion</a></div>
+      {% else %}
+          <div class="me-2 bg-box rounded nav-box text-center py-1 shadow"><a href="#" class="text-secondary text-decoration-none fw-bold fs-5">s'inscrire</a></div>
+          <div class="bg-box rounded nav-box text-center py-1 shadow"><a href="{{ path('app_login') }}" class="text-secondary text-decoration-none fw-bold fs-5">connexion</a></div>
+      {% endif %}
+        </div>
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Wild series</h5>
@@ -23,12 +28,19 @@
         </div>
         <div class="offcanvas-body">
           <div class="me-5 d-flex flex-row justify-content-beetwen">
-            <div class="me-1 bg-box rounded nav-box text-center py-1 ms-5 shadow">
-              <a href="#" class="text-secondary text-decoration-none fw-bold fs-5">s'inscrire</a>
-          </div>
-          <div class="bg-box rounded nav-box text-center py-1 ms-5 shadow">
-              <a href="#" class="text-secondary text-decoration-none fw-bold fs-5">connexion</a>
-          </div>
+            {% if app.user %}
+              {{ app.user.email }}
+              <div class="bg-box rounded nav-box text-center py-1 ms-5 shadow">
+                <a href="{{ path('app_logout') }}" class="text-secondary text-decoration-none fw-bold fs-5">déconnexion</a>
+              </div>
+            {% else %}
+              <div class="me-1 bg-box rounded nav-box text-center py-1 ms-5 shadow">
+                <a href="#" class="text-secondary text-decoration-none fw-bold fs-5">s'inscrire</a>
+              </div>
+              <div class="bg-box rounded nav-box text-center py-1 ms-5 shadow">
+                <a href="{{ path('app_login') }}" class="text-secondary text-decoration-none fw-bold fs-5">connexion</a>
+              </div>
+            {% endif %}
           </div>
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">

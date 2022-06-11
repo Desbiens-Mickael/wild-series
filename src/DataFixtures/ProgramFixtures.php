@@ -104,9 +104,9 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             $program->setYear($faker->year());
             $program->setSlug($this->slug->generate($program->getTitle()));
             $program->setCategory($this->getReference($element['category']));
+            $program->setOwner($this->getReference('user_' . rand(1,2)));
             $manager->persist($program);
             $this->addReference('program_' . $key, $program);
-            
         }
         $manager->flush();
     }

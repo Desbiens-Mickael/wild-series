@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 #[Route('/program', name: 'program_')]
 class ProgramController extends AbstractController
@@ -98,6 +99,7 @@ class ProgramController extends AbstractController
             $slug = $slugify->generate($program->getTitle());
             $program->setSlug($slug);
 
+            $program->setOwner($this->getUser());
             $ProgramRepository->add($program, true);     
 
             $email = (new Email())
@@ -116,6 +118,32 @@ class ProgramController extends AbstractController
 
         // Render the form (best practice)
         return $this->renderForm('program/new.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+
+    #[Route('/{program_slug<[^0-9]+>}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    #[ParamConverter('program', options: ['mapping' =>['program_slug' => 'slug']])]
+    public function edit(Request $request, Program $program, ProgramRepository $programRepository): Response
+    {
+        // Check wether the logged in user is the owner of the program
+        if (!($this->getUser() == $program->getOwner()) && !($this->isGranted('ROLE_ADMIN'))) {
+            // If not the owner, throws a 403 Access Denied exception
+            throw new AccessDeniedException("Vous n'avez pas les droits pour modifier cette série!");
+        }
+
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $programRepository->add($program, true);
+
+            return $this->redirectToRoute('program_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('program/edit.html.twig', [
+            'program' => $program,
             'form' => $form,
         ]);
     }
@@ -151,5 +179,16 @@ class ProgramController extends AbstractController
             'season' => $season,
             'episode'=> $episode,
         ]);
+    }
+
+
+    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    public function delete(Request $request, Program $program, ProgramRepository $programRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
+            $programRepository->remove($program, true);
+        }
+
+        return $this->redirectToRoute('program_index', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -8,5 +8,38 @@
         <h3>Saison : {{season.number}} </h3>
         <p>Episode {{episode.number}} : {{episode.title}} </p>
         <p> {{episode.synopsis}} </p>
+        {% if app.user %}
+            <a class="btn btn-outline-primary" href="{{ path('comment_new', {'episode_slug': episode.slug}) }}">ajouter un commentaire</a>  
+
+            <table class="table mt-5">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Comment</th>
+                        <th>Rate</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+            {% for comment in episode.comments %}
+                    <tr>
+                        <td>{{ comment.id }}</td>
+                        <td>{{ comment.comment }}</td>
+                        <td>{{ comment.rate }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ path('comment_show', {'id': comment.id}) }}"><i class="bi bi-eye"></i> show</a>
+                            {% if is_granted("ROLE_ADMIN") or app.user == comment.author %}
+                                <a class="btn btn-primary" href="{{ path('comment_edit', {'id': comment.id}) }}"><i class="bi bi-pen"></i> edit</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+            {% else %}
+                    <tr>
+                        <td colspan="4">no records found</td>
+                    </tr>
+            {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </div>
 {% endblock %}
