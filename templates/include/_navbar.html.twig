@@ -1,7 +1,11 @@
 <header>
   <nav class="navbar navbar-light bg-body-bg fixed-top pt-0 shadow">
     <div class="container-fluid bg-primary mb-2 baniere-nav">
-      <h3 class="text-center w-100 text-font-colour">Bienvenue</h3>
+      {% if app.user %}
+        <h3 class="text-center w-100 text-font-colour">Bienvenue {{ app.user.email }}</h3>
+      {% else %}
+        <h3 class="text-center w-100 text-font-colour">Bienvenue</h3>
+      {% endif %}
     </div>
     <div class="container-fluid d-flex flex-row justify-content-beetwen align-items-stretch">
       <div>
@@ -14,10 +18,9 @@
       </div>
       <div class="me-5 d-md-flex flex-md-row justify-content-beetwen d-none ">
       {% if app.user %}
-        {{ app.user.email }}
           <div class="bg-box rounded nav-box text-center py-1 shadow"><a href="{{ path('app_logout') }}" class="text-secondary text-decoration-none fw-bold fs-5">déconnexion</a></div>
       {% else %}
-          <div class="me-2 bg-box rounded nav-box text-center py-1 shadow"><a href="#" class="text-secondary text-decoration-none fw-bold fs-5">s'inscrire</a></div>
+          <div class="me-2 bg-box rounded nav-box text-center py-1 shadow"><a href="{{ path('app_register')}}" class="text-secondary text-decoration-none fw-bold fs-5">s'inscrire</a></div>
           <div class="bg-box rounded nav-box text-center py-1 shadow"><a href="{{ path('app_login') }}" class="text-secondary text-decoration-none fw-bold fs-5">connexion</a></div>
       {% endif %}
         </div>
@@ -54,19 +57,15 @@
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
+                Mon compte
               </a>
               <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li><a class="nav-link ps-5 dropdown-item " href="/my-profile">Profil</a></li>
+                <li><a class="nav-link ps-5 dropdown-item" href="#">Mes séries</a></li>
               </ul>
             </li>
           </ul>
-          <form class="d-flex">
+          <form class="d-flex mt-2">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>

@@ -28,7 +28,7 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
 
     public function getDependencies()
     {
-        // Tu retournes ici toutes les classes de fixtures dont ProgramFixtures dépend
+        // Tu retournes ici toutes les classes de fixtures dont ActorFixtures dépend
         return [
           ProgramFixtures::class,
         ];

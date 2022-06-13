@@ -47,6 +47,8 @@ class CommentController extends AbstractController
 
             $commentRepository->add($comment, true);
 
+            $this->addFlash('success', 'Votre commentaire a bien été ajouté');
+
             $slug = $episode->getSlug();
             $seasonId = $episode->getSeason()->getId();
             $season = $episode->getSeason();
@@ -119,6 +121,7 @@ class CommentController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment, true);
         }
+        $this->addFlash('danger', 'Votre commentaire a bien été supprimé');
 
         $slug = $comment->getEpisode()->getSlug();
         $seasonId = $comment->getEpisode()->getSeason()->getId();

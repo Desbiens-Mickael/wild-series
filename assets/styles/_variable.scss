@@ -4,14 +4,18 @@ $body-bg: #FDF7FA;
 $navbar-light-color: $secondary;
 $navbar-light-toggler-border-color: $body-bg;
 $navbar-light-brand-color: $secondary;
+$success : #49ef28;
+$danger : $secondary;
 
 $theme-colors: (
-    "primary": $primary,
-    "secondary": $secondary,
-    "body-bg": $body-bg,
-    "navbar-light-color" : $navbar-light-color,
-    "navbar-light-toggler-border-color": $navbar-light-toggler-border-color,
-    "navbar-light-brand-color": $navbar-light-brand-color,
+        "primary": $primary,
+        "secondary": $secondary,
+        "body-bg": $body-bg,
+        "navbar-light-color" : $navbar-light-color,
+        "navbar-light-toggler-border-color": $navbar-light-toggler-border-color,
+        "navbar-light-brand-color": $navbar-light-brand-color,
+        "success": $success,
+        "danger": $danger,
 );
 
 // Create your own map

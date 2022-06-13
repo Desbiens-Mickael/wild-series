@@ -27,8 +27,8 @@ class Program
     #[Assert\NotBlank()]
     #[Assert\Regex(
         pattern: '/plus belle la vie/',
-        match: false,
         message: 'On parle de vraies séries ici',
+        match: false,
     )]
     private string $synopsis;
 

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Season;
 use App\Entity\Episode;
 use App\Entity\Program;
+use App\Form\SearchProgramForm;
 use App\Service\Slugify;
 use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
@@ -24,13 +25,28 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class ProgramController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(ProgramRepository $programRepository): Response
+    public function index(Request $request, ProgramRepository $programRepository): Response
     {
-        $programs = $programRepository->findAll();
+        //création du formulaire
+        $form = $this->createForm(SearchProgramForm::class);
+        //récupération de la requête
+        $form->handleRequest($request);
 
-        return $this->render('program/index.html.twig', [
+        //vérifie si le formulaire et bien soumis et valide
+        if ($form->isSubmitted() && $form->isValid()) {
+            //récupère le contenu du champ 'search'
+            $search = $form->getData()['search'];
+            //passe le contenu de 'search' à [findLikeName()] et retourne le résultat de la requête dans $program
+            $programs = $programRepository->findLikeName($search);
+        } else {
+            //sinon on retourne tout les program
+            $programs = $programRepository->findAll();
+        }
+
+        return $this->renderForm('program/index.html.twig', [
             'programs' => $programs,
-         ]);
+            'form' => $form,
+        ]);
     }
 
     #[Route('/new', name: 'new')]
@@ -112,7 +128,8 @@ class ProgramController extends AbstractController
 
             $mailer->send($email);
 
-            // Redirect to categories list
+            $this->addFlash('success', 'La nouvelle série a bien été créée');
+            // Redirect to program list
             return $this->redirectToRoute('program_index');
         }
 
@@ -189,6 +206,7 @@ class ProgramController extends AbstractController
             $programRepository->remove($program, true);
         }
 
+        $this->addFlash('danger', 'Votre série a bien été supprimée');
         return $this->redirectToRoute('program_index', [], Response::HTTP_SEE_OTHER);
     }
 }
