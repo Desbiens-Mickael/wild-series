@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Actor;
 use App\Entity\Program;
-use Doctrine\DBAL\Types\TextType as TypesTextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

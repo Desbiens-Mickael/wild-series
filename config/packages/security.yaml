@@ -41,6 +41,7 @@ security:
                 enable_csrf: true
             logout:
                 path: app_logout
+                target: /fr/
                 
 
             # activate different ways to authenticate

@@ -4,6 +4,7 @@
 
 {% block body %}
     <div class="container">
+        <img class="mr-3 h-25 w-25" src="/{{ images_dir }}/{{ program.poster }}" alt="{{ program.title }}">
         <h1>{{program.title}}</h1>
         <h3>Saison : {{season.number}} </h3>
         <p>Episode {{episode.number}} : {{episode.title}} </p>
@@ -35,7 +36,7 @@
                     </tr>
             {% else %}
                     <tr>
-                        <td colspan="4">no records found</td>
+                        <td colspan="4">aucun commentaire trouvé</td>
                     </tr>
             {% endfor %}
                 </tbody>

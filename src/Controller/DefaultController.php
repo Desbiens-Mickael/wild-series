@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/', name: 'home_')]
 class DefaultController extends AbstractController
 {
-    #[Route('/', name: 'index')]
+    #[Route('', name: 'index')]
     public function index(
         ProgramRepository $programRepository, 
         CategoryRepository $categoryRepository,
@@ -23,10 +23,17 @@ class DefaultController extends AbstractController
         $programs = $programRepository->findAll();
         $categories = $categoryRepository->findAll();
         $actors = $actorRepository->findAll();
-        return $this->render('home/index.html.twig', [
+        return $this->render('/home/index.html.twig', [
             'programs' => $programs,
             'categories' => $categories,
             'actors' => $actors,
+        ]);
+    }
+
+    public function navbarTop(CategoryRepository $categoryRepository): Response
+    {
+        return $this->render('/include/_navbartop.html.twig', [
+            'categories' => $categoryRepository->findBy([], ['id' => 'DESC'])
         ]);
     }
 }

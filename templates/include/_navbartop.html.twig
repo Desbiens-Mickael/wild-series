@@ -1,0 +1,9 @@
+
+    <a type="button" class="nav-link text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        Categorie
+    </a>
+    <ul class="dropdown-menu shadow">
+        {% for category in categories %}
+            <li><a class="nav-link ps-5 dropdown-item" href="{{ path('category_show', {'categoryName': category.name}) }}">{{ category.name }}</a></li>
+        {% endfor %}
+    </ul>

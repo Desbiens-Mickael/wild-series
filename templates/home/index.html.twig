@@ -11,12 +11,12 @@
                 {% for program in carousel %}
                     {% if program == carousel[0] %}
                         <div class="d-flex flex-column small-screen-btn">
-                            <img src="{{ images_dir }}/{{ program.poster }}" alt="Image de {{ program.title }}" class="button-img d-none d-md-block">
+                            <img src="/{{ images_dir }}/{{ program.poster }}" alt="Image de {{ program.title }}" class="button-img d-none d-md-block">
                             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="bg-secondary h-100 w-100 m-0 border-0 active" aria-current="true" aria-label="Slide 1"></button>
                         </div>
                     {% else %}
                         <div class="d-flex flex-column ms-2 small-screen-btn">
-                            <img src="{{ images_dir }}/{{ program.poster }}" alt="Image de {{ program.title }}" class="button-img d-none d-md-block">
+                            <img src="/{{ images_dir }}/{{ program.poster }}" alt="Image de {{ program.title }}" class="button-img d-none d-md-block">
                             <button class="bg-secondary h-100 w-100 m-0 border-0" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{loop.index - 1}}" aria-label="Slide {{loop.index }}"></button>
                         </div>
                     {% endif %}
@@ -27,13 +27,13 @@
                     {% if program == carousel[0] %}
                         <div class="carousel-item active text-center bg-carousel-gray">
                             <a href="{{ path('program_show', {'slug' : program.slug}) }}">
-                                <img src="{{ images_lg_dir }}/{{ program.posterLg }}" class="img-carousel" alt="...">
+                                <img src="/{{ images_lg_dir }}/{{ program.posterLg }}" class="img-carousel" alt="...">
                             </a>
                         </div>   
                     {% else %}
                         <div class="carousel-item text-center bg-carousel-gray">
                             <a href="{{ path('program_show', {'slug' : program.slug}) }}">
-                                <img src="{{ images_lg_dir }}/{{ program.posterLg }}" class="img-carousel" alt="...">
+                                <img src="/{{ images_lg_dir }}/{{ program.posterLg }}" class="img-carousel" alt="...">
                             </a>
                         </div>
                     {% endif %}

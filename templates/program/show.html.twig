@@ -5,9 +5,16 @@
 {% block body %}
     <div>
         <div class="media text-center">
-            <img class="mr-3 h-25 w-25" src="../../{{ images_dir }}/{{ program.poster }}" alt="{{ program.title }}">
+            <img class="mr-3 h-25 w-25" src="/{{ images_dir }}/{{ program.poster }}" alt="{{ program.title }}">
             <div class="media-body d-flex flex-column justify-content-beetwen align-items-center">
-                <h1 class="mt-2">{{ program.title }}</h1>
+               <div class=" mt-2 d-flex flex-row justify-content-evenly align-items-center">
+                   <h1>{{ program.title }}</h1>
+                   {% if app.user %}
+                       <a id="watchlist" href="{{ path('program_watchlist', {id: program.id})}}">
+                           <i class=" fs-3 ms-2 text-secondary bi {{ app.user.isInWatchlist(program) ? 'bi-heart-fill' : 'bi-heart' }}"></i>
+                       </a>
+                   {% endif %}
+               </div>
                 <p><strong>Catégorie :</strong> {{ program.category.name }}</p>
                 <p class="w-75">{{ program.synopsis }}</p>
                 <strong>Saison : </strong>

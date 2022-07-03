@@ -1,27 +1,41 @@
 <header>
   <nav class="navbar navbar-light bg-body-bg fixed-top pt-0 shadow">
     <div class="container-fluid bg-primary mb-2 baniere-nav">
-      {% if app.user %}
-        <h3 class="text-center w-100 text-font-colour">Bienvenue {{ app.user.email }}</h3>
-      {% else %}
-        <h3 class="text-center w-100 text-font-colour">Bienvenue</h3>
-      {% endif %}
+        {% if app.user %}
+            <h3 class="text-center w-100 text-font-colour">
+              {% trans with {'%username%': app.user.email} %}
+                Welcome_username
+              {% endtrans %}
+            </h3>
+        {% else %}
+            <h3 class="text-center w-100 text-font-colour"> {{ 'Welcome'|trans }}</h3>
+        {% endif %}
     </div>
     <div class="container-fluid d-flex flex-row justify-content-beetwen align-items-stretch">
       <div>
         <button class="navbar-toggler ms-3 me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href="{{ path('home_index') }}">
           <img src="{{ asset('build/images/Wild.png') }}" alt="Logo wild series" class="nav-img ">
         </a>
       </div>
       <div class="me-5 d-md-flex flex-md-row justify-content-beetwen d-none ">
+        <div class="dropdown">
+          <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            Langue
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="/fr">fr</a></li>
+            <li><a class="dropdown-item" href="/en">en</a></li>
+          </ul>
+        </div>
       {% if app.user %}
-          <div class="bg-box rounded nav-box text-center py-1 shadow"><a href="{{ path('app_logout') }}" class="text-secondary text-decoration-none fw-bold fs-5">déconnexion</a></div>
+          <div class="bg-box rounded nav-box text-center py-1 shadow"><a href="{{ path('app_logout') }}" class="text-secondary text-decoration-none fw-bold fs-5"> {{ 'account.logout'|trans }}</a></div>
       {% else %}
-          <div class="me-2 bg-box rounded nav-box text-center py-1 shadow"><a href="{{ path('app_register')}}" class="text-secondary text-decoration-none fw-bold fs-5">s'inscrire</a></div>
-          <div class="bg-box rounded nav-box text-center py-1 shadow"><a href="{{ path('app_login') }}" class="text-secondary text-decoration-none fw-bold fs-5">connexion</a></div>
+          <div class="me-2 bg-box rounded nav-box text-center py-1 shadow"><a href="{{ path('app_register')}}" class="text-secondary text-decoration-none fw-bold fs-5">  {{ 'account.register'|trans }}</a></div>
+          <div class="bg-box rounded nav-box text-center py-1 shadow"><a href="{{ path('app_login') }}" class="text-secondary text-decoration-none fw-bold fs-5">  {{ 'account.login'|trans }}</a></div>
       {% endif %}
         </div>
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
@@ -53,13 +67,13 @@
               <a class="nav-link" href="{{ path('program_index')}}">Program</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ path('category_index')}}">Categorie</a>
+              {{ render(controller('App\\Controller\\DefaultController::navbarTop')) }}
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Mon compte
               </a>
-              <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
+              <ul class="dropdown-menu shadow" aria-labelledby="offcanvasNavbarDropdown">
                 <li><a class="nav-link ps-5 dropdown-item " href="/my-profile">Profil</a></li>
                 <li><a class="nav-link ps-5 dropdown-item" href="#">Mes séries</a></li>
               </ul>

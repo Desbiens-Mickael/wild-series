@@ -1,0 +1,5 @@
+Welcome_username: Welcome %username%
+Welcome: Welcome
+account.logout: Logout
+account.register: Register
+account.login: Login
